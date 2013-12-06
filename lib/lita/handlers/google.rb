@@ -9,6 +9,10 @@ module Lita
         "google QUERY" => "Return the first Google search result for QUERY."
       })
 
+      def self.default_config(handler_config)
+        handler_config.safe_search = :active
+      end
+
       def search(response)
         query = response.matches[0][0]
 
