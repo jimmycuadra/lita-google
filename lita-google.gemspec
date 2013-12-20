@@ -1,12 +1,13 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-google"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.authors       = ["Jimmy Cuadra"]
   spec.email         = ["jimmy@jimmycuadra.com"]
   spec.description   = %q{A Lita handler for returning Google search results.}
   spec.summary       = %q{A Lita handler for returning Google search results.}
   spec.homepage      = "https://github.com/jimmycuadra/lita-google"
   spec.license       = "MIT"
+  spec.metadata      = { "lita_plugin_type" => "handler" }
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
