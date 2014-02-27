@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-google"
-  spec.version       = "0.0.3"
+  spec.version       = "0.0.4"
   spec.authors       = ["Jimmy Cuadra"]
   spec.email         = ["jimmy@jimmycuadra.com"]
   spec.description   = %q{A Lita handler for returning Google search results.}
