@@ -23,8 +23,8 @@ describe Lita::Handlers::Google, lita_handler: true do
 {
   "responseData": {
     "results": [{
-      "url": "https://www.ruby-lang.org/",
-      "titleNoFormatting": "Ruby Programming Language"
+      "unescapedUrl": "http://www.youtube.com/watch?v=EwTZ2xpQwpA",
+      "titleNoFormatting": "&quot;Chocolate Rain&quot; Original Song by Tay Zonday"
     }]
   }
 }
@@ -34,7 +34,7 @@ JSON
       send_command("google ruby")
 
       expect(replies.last).to eq(
-        "Ruby Programming Language - https://www.ruby-lang.org/"
+        %{"Chocolate Rain" Original Song by Tay Zonday - http://www.youtube.com/watch?v=EwTZ2xpQwpA}
       )
     end
 

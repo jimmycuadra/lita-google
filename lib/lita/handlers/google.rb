@@ -1,3 +1,6 @@
+require "cgi"
+require "uri"
+
 require "lita"
 
 module Lita
@@ -28,7 +31,9 @@ module Lita
           result = data["responseData"]["results"].first
 
           if result
-            response.reply("#{result["titleNoFormatting"]} - #{result["url"]}")
+            response.reply(
+              "#{CGI.unescapeHTML(result["titleNoFormatting"])} - #{result["unescapedUrl"]}"
+            )
           else
             response.reply("No search results for query: #{query}")
           end
