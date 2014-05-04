@@ -8,7 +8,7 @@ module Lita
     class Google < Handler
       URL = "https://ajax.googleapis.com/ajax/services/search/web"
 
-      route(/^google\s+(.+)/i, :search, command: true, help: {
+      route(/^(?:google|g)\s+(.+)/i, :search, command: true, help: {
         "google QUERY" => "Return the first Google search result for QUERY."
       })
 
