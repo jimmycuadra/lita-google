@@ -1,9 +1,9 @@
 require "spec_helper"
 
 describe Lita::Handlers::Google, lita_handler: true do
-  it { routes_command("google ruby").to(:search) }
-  it { routes_command("google me ruby").to(:search) }
-  it { routes_command("g ruby").to(:search) }
+  it { is_expected.to route_command("google ruby").to(:search) }
+  it { is_expected.to route_command("google me ruby").to(:search) }
+  it { is_expected.to route_command("g ruby").to(:search) }
 
   describe "#search" do
     let(:response) do
