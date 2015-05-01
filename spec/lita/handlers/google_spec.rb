@@ -62,5 +62,59 @@ JSON
 
       send_command("google ruby")
     end
+
+    it "skips over domains that are blacklisted config" do
+      registry.config.handlers.google.excluded_domains = ['funnyjunk.com' ,'gawker.com']
+
+      allow(response).to receive(:body).and_return(
+<<-JSON.chomp
+{
+  "responseData": {
+    "results": [
+      {
+        "unescapedUrl": "http://www.funnyjunk.com",
+        "titleNoFormatting": "Funny pictures blah blah"
+      },
+      {
+        "unescapedUrl": "http://theoatmeal.com/blog/funnyjunk2",
+        "titleNoFormatting": "An update on the FunnyJunk situation"
+      }
+  ]
+  }
+}
+JSON
+      )
+
+      send_command("google funnyjunk")
+
+      expect(replies.last).to eq(
+        "An update on the FunnyJunk situation - http://theoatmeal.com/blog/funnyjunk2"
+      )
+    end
+    it "fails gracefully if URI.parse raises an error" do
+      registry.config.handlers.google.excluded_domains = ['dailmail.co.uk']
+
+      allow(response).to receive(:body).and_return(
+<<-JSON.chomp
+{
+  "responseData": {
+    "results": [
+      {
+        "unescapedUrl": "555-867-5309",
+        "titleNoFormatting": "Funny pictures blah blah"
+      }
+  ]
+  }
+}
+JSON
+      )
+
+      send_command("google funnyjunk")
+
+      expect(replies.last).to eq(
+        "Funny pictures blah blah - 555-867-5309"
+      )
+    end
+
   end
 end
