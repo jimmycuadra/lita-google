@@ -63,9 +63,7 @@ module Lita
           begin
             uri = URI.parse(response["unescapedUrl"])
             if uri && uri.host
-              unless config.excluded_domains.any? { |domain| uri.host.include?(domain) }
-                response
-              end
+              response if config.excluded_domains.none? { |domain| uri.host.include?(domain) }
             else
               response
             end
