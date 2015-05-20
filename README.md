@@ -20,11 +20,14 @@ gem "lita-google"
 
 * `safe_search` (String, Symbol) - The safe search setting to use. Possible values are `:active`, `:moderate`, and `:off`. Default: `:active`.
 
+* `excluded_domains` (Array<String>) - Domains from which you never want to see results.
+
 ### Example
 
 ```
 Lita.configure do |config|
   config.handlers.google.safe_search = :off
+  config.excluded_domains = ["gawker.com", "funnyjunk.com", "dailymail.co.uk"]
 end
 ```
 

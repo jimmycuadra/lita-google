@@ -17,12 +17,15 @@ module Lita
         end
       end
 
+      config :excluded_domains, type: Array
+
       route(/^(?:google|g)\s+(.+)/i, :search, command: true, help: {
         "google QUERY" => "Return the first Google search result for QUERY."
       })
 
       def search(response)
         query = response.matches[0][0]
+        result = nil
 
         http_response = http.get(
           URL,
@@ -33,7 +36,12 @@ module Lita
 
         if http_response.status == 200
           data = MultiJson.load(http_response.body)
-          result = data["responseData"]["results"].first
+
+          if config.excluded_domains
+            result = check_for_excluded_domains(data)
+          else
+            result = data["responseData"]["results"].first
+          end
 
           if result
             response.reply(
@@ -46,6 +54,22 @@ module Lita
           Lita.logger.warn(
             "Non-200 response from Google for search query: #{query}"
           )
+        end
+      end
+      private
+
+      def check_for_excluded_domains(data)
+        data["responseData"]["results"].find do |response|
+          begin
+            uri = URI.parse(response["unescapedUrl"])
+            if uri && uri.host
+              response if config.excluded_domains.none? { |domain| uri.host.include?(domain) }
+            else
+              response
+            end
+          rescue URI::InvalidURIError
+            nil
+          end
         end
       end
     end
