@@ -27,7 +27,7 @@ gem "lita-google"
 ```
 Lita.configure do |config|
   config.handlers.google.safe_search = :off
-  config.excluded_domains = ["gawker.com", "funnyjunk.com", "dailymail.co.uk"]
+  config.handlers.google.excluded_domains = ["gawker.com", "funnyjunk.com", "dailymail.co.uk"]
 end
 ```
 
